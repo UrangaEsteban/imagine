@@ -35,10 +35,14 @@ async function getImage(req, res){
 }
 
 async function getImages(req, res) {
+  var pageNumber = parseInt(req.query.page);
+  var regPerPage = parseInt(req.query.limit);
+
   try {
     var images = await Image
       .find()
-      .lean()
+      .skip(pageNumber * regPerPage)
+      .limit(regPerPage)
       .exec();
 
     res.status(200).json({ data: images });
@@ -51,10 +55,14 @@ async function getImages(req, res) {
 
 // TODO probably is going to move to user controllers, main use in user profile
 async function getImagesByUser(req, res) {
+  var pageNumber = parseInt(req.query.page);
+  var regPerPage = parseInt(req.query.limit);
+  
   try {
     var images = await Image
       .find({ createdBy: req.params.user_id })
-      .lean()
+      .skip(pageNumber * regPerPage)
+      .limit(regPerPage)
       .exec();
 
     res.status(200).json({ data: images })
@@ -104,7 +112,7 @@ async function updateImage(req, res) {
       },
       req.body,
       { new: true }
-    ).lean()
+    )
     .exec();
     
     if (!updatedImage) {
