@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var { config } = require('./config')
 var { connect } = require('./utils/db');
 var { signup, signin, protect } = require('./utils/auth');
-var { router } = require('./routers/api/user');
+var { userRouter } = require('./routers/api/user');
 var { imageRouter } = require('./routers/api/image');
 var cors = require('cors');
 
@@ -29,7 +29,7 @@ app.get('/', function handleIndex(req, res) {
   res.send('Winter is coming!');
 })
 
-app.use('/api/user', router);
+app.use('/api/user', userRouter);
 
 app.use('/api/image', imageRouter);
 

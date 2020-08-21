@@ -1,9 +1,11 @@
 var express = require('express');
-var router = express.Router();
-var { getUser } = require('../../controllers/user');
+var userRouter = express.Router();
+var { getUser, addFavorite, removeFavorite } = require('../../controllers/user');
 
-router.get('/', getUser);
+userRouter.get('/', getUser);
+userRouter.post('/:favorite_id', addFavorite);
+userRouter.delete('/:favorite_id', removeFavorite);
 
 module.exports = {
-  router
+  userRouter
 }
