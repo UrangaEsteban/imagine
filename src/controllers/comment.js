@@ -12,12 +12,17 @@ module.exports = {
 // *********************************************************************
 
 async function getCommentsByImage(req, res) {
+  var pageNumber = parseInt(req.query.page);
+  var regPerPage = parseInt(req.query.limit);
+
   var parentType = "image";
   var parentId = req.params.id;
+
   try {
     var comments = await Comment
     .find({ parentType, parentId })
-    .lean()
+    .skip( pageNumber * regPerPage )
+    .limit(regPerPage)
     .exec()
 
     if (!comments) {
