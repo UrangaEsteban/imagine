@@ -7,6 +7,7 @@ var { connect } = require('./utils/db');
 var { signup, signin, protect } = require('./utils/auth');
 var { userRouter } = require('./routers/api/user');
 var { imageRouter } = require('./routers/api/image');
+var { searchRouter } = require('./routers/api/search')
 var cors = require('cors');
 
 var app = express();
@@ -32,6 +33,8 @@ app.get('/', function handleIndex(req, res) {
 app.use('/api/user', userRouter);
 
 app.use('/api/image', imageRouter);
+
+app.use('/api/search', searchRouter)
 
 exports.start = async function start(){
   try {
